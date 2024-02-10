@@ -1,9 +1,22 @@
 import Image from 'next/image';
-import { notFound } from 'next/navigation'
+import { notFound } from 'next/navigation';
 
 import { getMeal } from '@/lib/meals';
 
 import classes from './page.module.css';
+
+const generateMetadata = async ({ params }) => {
+    const meal = getMeal(params.mealSlug);
+
+    if (!meal) {
+        notFound();
+    }
+
+    return {
+        title: meal.title,
+        description: meal.summary,
+    };
+};
 
 const MealDetailsPage = ({ params }) => {
     console.log(`params: `, params);
